@@ -9,9 +9,10 @@
 import React from 'react';
 
 import Opacitycheck from "./pages/Opacitycheck";
+import Translatecheck from "./pages/Translatecheck";
 const App = () => {
   return (
-    <Opacitycheck/>
+    <Translatecheck/>
   );
 };
 
