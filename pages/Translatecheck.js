@@ -14,16 +14,39 @@ class Translatecheck extends React.Component{
         animationLeft:new Animated.Value(0),
         animationColor:new Animated.Value(0),
         animationRotate:new Animated.Value(0),
+        animationRotateHeight:new Animated.Value(0),
+        animationRotateWidth:new Animated.Value(0)
     }
     startAnimation=()=>{
         this.setState({disabled:true},()=>{
             setTimeout(()=>{this.setState({disabled:false})},1600)
         })
+        
+        //Animating height of the black box
+        Animated.timing(this.state.animationRotateHeight,{
+            toValue:1,
+            duration:800
+        }).start(()=>{
+            Animated.timing(this.state.animationRotateHeight,{
+                toValue:0,
+                duration:800
+            }).start()
+        })
 
+        //Animating width of the black box
+        Animated.timing(this.state.animationRotateWidth,{
+            toValue:1,
+            duration:800
+        }).start(()=>{
+            Animated.timing(this.state.animationRotateWidth,{
+                toValue:0,
+                duration:800
+            }).start()
+        })
 
         //Animating black box rotation
         Animated.timing(this.state.animationRotate,{
-            toValue:360,
+            toValue:1,
             duration:800
         }).start(()=>{
             Animated.timing(this.state.animationRotate,{
@@ -214,14 +237,23 @@ class Translatecheck extends React.Component{
         }
 
         const animateRotate=this.state.animationRotate.interpolate({
-            inputRange:[0,360],
-            outputRange:['0deg','360deg']
+            inputRange:[0,1],
+            outputRange:['0deg','410deg']
         })
-        
+        const animateHeight=this.state.animationRotateHeight.interpolate({
+            inputRange:[0,1],
+            outputRange:[40,100]
+        })
+        const animateWidth=this.state.animationRotateWidth.interpolate({
+            inputRange:[0,1],
+            outputRange:[40,100]
+        })
         const animatedStyles3={
+            height:animateHeight,
+            width:animateWidth,
             transform:[
                 {
-                    rotate:animateRotate
+                    rotate:animateRotate//You can also use rotateX and rotateY to rotate along x and y axis respectively
                 }
             ]
         }
@@ -276,8 +308,6 @@ const styles=StyleSheet.create({
         marginBottom:60
     },
     box3:{
-        height:40,
-        width:40,
         marginBottom:40,
         backgroundColor:'black'
     }
