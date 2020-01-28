@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,Animated,StyleSheet,TouchableWithoutFeedback } from "react-native";
+import { View,Animated,StyleSheet,TouchableWithoutFeedback,Easing } from "react-native";
 class Translatecheck extends React.Component{
     state={
         animationY:new Animated.Value(0),
@@ -15,13 +15,27 @@ class Translatecheck extends React.Component{
         animationColor:new Animated.Value(0),
         animationRotate:new Animated.Value(0),
         animationRotateHeight:new Animated.Value(0),
-        animationRotateWidth:new Animated.Value(0)
+        animationRotateWidth:new Animated.Value(0),
+        animationTomatoX:new Animated.Value(0)
     }
     startAnimation=()=>{
         this.setState({disabled:true},()=>{
             setTimeout(()=>{this.setState({disabled:false})},1600)
         })
         
+
+        //Animating the yellow box
+        Animated.timing(this.state.animationTomatoX,{
+            toValue:100,
+            duration:1600,
+            //easing:Easing.back(4)
+            //easing:Easing.elastic(1)
+            easing:Easing.bounce
+        }).start(()=>{
+            this.state.animationTomatoX.setValue(0)
+        })
+
+
         //Animating height of the black box
         Animated.timing(this.state.animationRotateHeight,{
             toValue:1,
@@ -257,6 +271,13 @@ class Translatecheck extends React.Component{
                 }
             ]
         }
+        const animatedStyles4={
+            transform:[
+                {
+                    translateX:this.state.animationTomatoX
+                }
+            ]
+        }
         return(
             <View style={styles.container}>
                 <TouchableWithoutFeedback onPress={this.startAnimation} disabled={this.state.disabled} >
@@ -265,11 +286,18 @@ class Translatecheck extends React.Component{
                     </Animated.View>
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={this.startAnimation} disabled={this.state.disabled} >
-                    <Animated.View style={[styles.box3,animatedStyles3]}>
-                    </Animated.View>
-                </TouchableWithoutFeedback>
+                <View style={styles.midContainer}>
+                    <TouchableWithoutFeedback onPress={this.startAnimation} disabled={this.state.disabled} >
+                        <Animated.View style={[styles.box3,animatedStyles3]}>
+                        </Animated.View>
+                    </TouchableWithoutFeedback>
 
+                    <TouchableWithoutFeedback onPress={this.startAnimation} disabled={this.state.disabled} >
+                        <Animated.View style={[styles.box4,animatedStyles4]}>
+                        </Animated.View>
+                    </TouchableWithoutFeedback>
+                </View>
+                
                 <TouchableWithoutFeedback onPress={this.startAnimation} disabled={this.state.disabled} >
                     <Animated.View style={[styles.box1,animatedStyles1]}>
                         <View style={styles.redDot}></View>
@@ -310,5 +338,18 @@ const styles=StyleSheet.create({
     box3:{
         marginBottom:40,
         backgroundColor:'black'
-    }
+    },
+    midContainer:{
+        display:'flex',
+        flexDirection:'row',
+        width:'100%',
+        justifyContent:'space-around',
+        backgroundColor:'red'
+    },
+    box4:{
+        marginBottom:40,
+        backgroundColor:'yellow',
+        height:40,
+        width:40
+    },
 })
