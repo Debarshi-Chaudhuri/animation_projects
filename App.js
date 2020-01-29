@@ -7,12 +7,12 @@
  */
 
 import React from 'react';
-
+import AnimatedFunctions from "./pages/AnimatedFunctions";
 import Opacitycheck from "./pages/Opacitycheck";
 import Translatecheck from "./pages/Translatecheck";
 const App = () => {
   return (
-    <Translatecheck/>
+    <AnimatedFunctions/>
   );
 };
 
